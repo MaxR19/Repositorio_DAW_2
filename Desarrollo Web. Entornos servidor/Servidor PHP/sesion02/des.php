@@ -16,26 +16,6 @@ function mostrarCapital($pais){
 }
 
 
-function crearNuevaTabla($nueva_tabla){
-    $nueva_tabla = []; // <- aquí se crea
-    global $paises;
-
-    foreach ($paises as $p) {
-
-        $capitalPais="";
-
-        $capitalPais=mostrarCapital($p->nombre);
-
-        $nueva_tabla[] = [
-            "nombre"     => $p->nombre,
-            "capital"    => $capitalPais ?? "—",
-            "habitantes" => $p->habitantes,
-            "superficie" => $p->superficie
-        ];
-    }
-    return $nueva_tabla;
-}
-
 // ====== Datos de origen (quedan en el mismo archivo) ======
 $paises = [
     (object)[ "nombre" => "China", "habitantes" => 1410470000, "superficie" => 9596961 ],
@@ -86,20 +66,47 @@ $capitales = [
 
 //inicializo mi variable que va a contener el código html
 $sHtml="";
+
+//Añado los estilos
+$sHtml.="<style>";
+$sHtml.="    .alineadoCentro {";
+$sHtml.="        text-align:center";
+$sHtml.="    }";
+$sHtml.="</style>";
+
 //Inicializamos la tabla html
 $sHtml.="<table>";
 
 //Ponemos los títulos de la tabla
 $sHtml.="<tr>";
 $sHtml.="   <th><b>PAIS</b></th>";
-$sHtml.="   <th><b>CAPITAL</b></th>";
+$sHtml.="   <th class=\"alineadoCentro\"><b>CAPITAL</b></th>";
 $sHtml.="   <th><b>Nº HABITANTES</b></th>";
 $sHtml.="   <th><b>SUPERFICIE</b></th>";
 $sHtml.="</tr>";
 
 
-// ====== 2) Nueva tabla con exactamente 4 columnas ======
-$nueva_tabla = []; // <- aquí se crea
-$nueva_tabla = crearNuevaTabla($nueva_tabla);
+//RECORRER EL ARRAY
+foreach ($paises as $pais) {
+    $nueva_tabla_paises[] = (object)[
+        "nombre" => $pais->nombre,
+        "capital" => mostrarCapital($pais->nombre),
+        "habitantes" => $pais->habitantes,
+        "superficie" => $pais->superficie
+    ];
+}
 
+foreach ($nueva_tabla_paises as $pais) {
+    //Vamos añadiendo fila a fila
+        $sHtml.="<tr>";
+        $sHtml.="   <td>". $pais->nombre ."</td>";
+        $sHtml.="   <td class=\"alineadoCentro\">". $pais->capital ."</td>";
+        $sHtml.="   <td>". strval($pais->habitantes)."</td>";
+        $sHtml.="   <td>". strval($pais->superficie)."</td>";
+        $sHtml.="</tr>";
+}
 
+//Finalizamos la tabla html
+$sHtml.="</table>";
+
+echo($sHtml);
