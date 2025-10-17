@@ -1,0 +1,10 @@
+<script>
+    let usuario = {
+        nombre: "Juan",
+        saludaconRetardo: function(callback) {
+            setTimeout(function() {
+                console.log(this.nombre);
+            }, 1000);
+        }
+    };
+</script>

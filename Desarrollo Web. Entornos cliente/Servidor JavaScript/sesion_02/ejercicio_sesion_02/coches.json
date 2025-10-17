@@ -1,0 +1,8 @@
+[
+  { "marca": "Tesla",   "modelo": "Model 3",   "año": 2023, "electrico": true,  "autonomia": 491 },
+  { "marca": "Nissan",  "modelo": "Leaf",      "año": 2020, "electrico": true,  "autonomia": 270 },
+  { "marca": "Renault", "modelo": "Clio",      "año": 2019, "electrico": false },
+  { "marca": "Toyota",  "modelo": "Corolla",   "año": 2022, "electrico": false },
+  { "marca": "Hyundai", "modelo": "Kona EV",   "año": 2021, "electrico": true,  "autonomia": 484 },
+  { "marca": "BMW",     "modelo": "i3",        "año": 2018, "electrico": true,  "autonomia": 260 }
+]

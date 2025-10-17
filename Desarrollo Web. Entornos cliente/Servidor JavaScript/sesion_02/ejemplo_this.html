@@ -1,0 +1,25 @@
+<script>
+    //++ this global
+    this.nombre = "Pepe";
+    let usuario = {
+        //++ this usuario
+        nombre: "David",
+        saluda: function() {
+            return this.nombre;
+        }
+        //-- this usuario
+    };
+
+    console.log(usuario.saluda()); // David
+
+    let intentaSaludar = usuario.saluda;
+    console.log(intentaSaludar()); // undefined
+
+    let usuario3 = {nombre: "David"};
+
+    function saluda() {
+        console.log(this.nombre);
+    }
+
+    saluda.call(usuario3); // David
+</script>

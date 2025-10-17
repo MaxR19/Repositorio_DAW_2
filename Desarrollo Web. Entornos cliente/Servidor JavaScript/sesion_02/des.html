@@ -1,0 +1,29 @@
+<script>
+  const usuario = {
+    paises: [
+      { nombre: "España" },
+      { nombre: "Argentina" },
+      { nombre: "Alemania" },
+      { nombre: "Francia" },
+    ],
+    indice: 0,
+    timer: null,
+
+    pintar() {
+      // repetimos cada 5s
+      this.timer = setInterval(() => {
+        const pais = this.paises[this.indice];
+        console.log(pais.nombre);
+
+        this.indice++;
+        // cuando termine, paramos el intervalo
+        if (this.indice >= this.paises.length) {
+          clearInterval(this.timer);
+          console.log("FIN");
+        }
+      }, 5000);
+    }
+  };
+
+  usuario.pintar();
+</script>

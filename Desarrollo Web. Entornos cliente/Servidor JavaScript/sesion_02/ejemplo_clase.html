@@ -1,0 +1,15 @@
+<script>
+    class Usuario {
+        constructor(nombre, apellido) {
+            this.nombre = nombre;
+            this.apellido = apellido;
+        }
+
+        saludar() {
+            console.log("Hola " + this.nombre);
+        }
+    }
+
+    let usuario = new Usuario("David", "Pérez");
+    usuario.saludar();
+</script>

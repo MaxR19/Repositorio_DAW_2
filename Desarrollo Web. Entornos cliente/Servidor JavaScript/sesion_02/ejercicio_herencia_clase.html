@@ -1,0 +1,7 @@
+<script>
+class Empleado extends Usuario { constructor(nombre, apellidos, puesto) { super(nombre, apellidos); this.puesto = puesto; } 
+saludar() { 
+    console.log(`Me llamo ${this.nombre} ${this.apellidos} y soy ${this.puesto}`); } } let empleado = new Empleado("David", "Pérez", "Desar 
+rollador"); empleado.saludar(); // "Me llamo David Pérez y soy Desarrollad 
+or" 
+</script>
