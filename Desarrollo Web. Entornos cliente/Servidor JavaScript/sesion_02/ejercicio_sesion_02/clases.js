@@ -1,5 +1,4 @@
-<script type="module">
-    class Coche {
+class Coche {
         constructor(marca, modelo, año) {
             this.marca = marca;
             this.modelo = modelo;
@@ -24,4 +23,3 @@
     }
 
     export { Coche, CocheElectrico };
-</script>
