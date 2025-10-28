@@ -1,0 +1,13 @@
+/* /assets/style.css */
+:root { font-family: system-ui, Arial, sans-serif; }
+.container { max-width: 680px; margin: 2rem auto; padding: 1rem; }
+.site-header, .site-footer { text-align: center; margin: 1rem 0; }
+.demo-form { display: grid; gap: .5rem; margin: 1rem 0; }
+#btn-saludar { padding: .5rem 1rem; cursor: pointer; }
+#resultado { margin-top: .75rem; font-weight: 600; }
+
+/*
+assets/style.css (cliente → presentación)
+Define la tipografía y el layout básico (centrado, anchos, espaciados).
+Estiliza el header/footer, el formulario (grid y separación) y los controles (botón, resultado).
+*/
