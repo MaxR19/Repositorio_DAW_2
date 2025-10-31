@@ -28,5 +28,10 @@ printMovieDetails($tableOrdered);
 
 // 2.
 $arrayEspecificMovies = [];
-$arrayEspecificMovies = array_slice($tableOrdered, 11, 5, false);
+$arrayEspecificMovies = array_slice($tableOrdered, 10, 5, false);
 printMovieDetails($arrayEspecificMovies);
+
+// 3.
+$tableNew = [];
+$tableNew = $movieTitles;
+array_splice($tableNew, 18, 1, ["El silencio de los corderos"]);
