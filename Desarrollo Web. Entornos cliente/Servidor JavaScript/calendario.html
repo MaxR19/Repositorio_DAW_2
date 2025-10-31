@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Películas</title>
-	<script type="module" src="funciones2.js" defer></script>
+    <title>Formulario</title>
+	<script type="module" src="funciones.js" defer></script>
     <style>
-        .tablaPeliculas {
+        #resultado {
             background: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -15,16 +15,18 @@
             text-align: center;   
             display: block; 
         }
-        .centerText {
-            text-align: center;
-        }
     </style>
 </head>
 <body>
     <header class="centerText">
-		<h1 class="centerText">Tabla de películas</h1>
+		<h1>Listado de fechas</h1>
 	</header>
     <main>
+		<form id="formulario">
+            <label class="textLabel" for="anio">Introduzca el año:</label>
+			<input id="anio" type="text">
+            <button type="submit">Enviar</button>
+        </form>
         <div id="resultado"></div>
     </main>
 </body>
