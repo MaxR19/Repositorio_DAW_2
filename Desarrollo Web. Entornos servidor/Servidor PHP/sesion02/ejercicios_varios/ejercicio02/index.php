@@ -20,6 +20,8 @@ function printMovieDetails($movieTitles) {
     echo $sHtml;
 }
 
+// MovieTiles
+
 // 1.
 $tableOrdered = [];
 $tableOrdered = $movieTitles;
@@ -35,3 +37,18 @@ printMovieDetails($arrayEspecificMovies);
 $tableNew = [];
 $tableNew = $movieTitles;
 array_splice($tableNew, 18, 1, ["El silencio de los corderos"]);
+array_splice($tableNew, 0, 1, ["Spider-Man: No Way Home"]);
+printMovieDetails($tableNew);
+
+// 4.
+array_unshift($tableNew, "Avatar: El sentido del agua"); // Una cualquiera.
+printMovieDetails($tableNew);
+
+// 5.
+array_push($tableNew, "Titanic");
+printMovieDetails($tableNew);
+
+
+// BestMovies
+
+// 1.
