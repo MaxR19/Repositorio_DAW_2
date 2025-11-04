@@ -1,4 +1,4 @@
-let Meses = [
+export let Meses = [
     {
         nombre: 'Enero',
         dias: 31
@@ -24,6 +24,10 @@ let Meses = [
         dias: 30
     },
     {
+        nombre: 'Julio',
+        dias: 31
+    },
+    {
         nombre: 'Agosto',
         dias: 31
     },
@@ -45,7 +49,7 @@ let Meses = [
     }];
 
 // Array con los días de la semana en castellano
-const diasSemana = [
+export const diasSemana = [
     "domingo",
     "lunes",
     "martes",
@@ -55,7 +59,7 @@ const diasSemana = [
     "sábado"
 ];
 
-function diaDeLaSemana(fecha) {
+export function diaDeLaSemana(fecha) {
     // Obtener la fecha actual 'yyyy-MM-dd'
     const fechaActual = new Date(fecha);
 
@@ -67,8 +71,9 @@ function diaDeLaSemana(fecha) {
     return diaSemanaTexto;
 }
 
+
 //++ ejercicio arrays
-const bestMovies = [
+export const bestMovies = [
     { title: "Cadena perpetua", director: "Frank Darabont", actor: "Tim Robbins" },
     { title: "El Padrino", director: "Francis Ford Coppola", actor: "Marlon Brando" },
     { title: "El caballero oscuro", director: "Christopher Nolan", actor: "Christian Bale" },
@@ -92,7 +97,7 @@ const bestMovies = [
   ];
   
 
-  const movieTitles = [
+  export const movieTitles = [
     "Cadena perpetua",
     "El Padrino",
     "El caballero oscuro",
@@ -114,15 +119,13 @@ const bestMovies = [
     "El silencio de los inocentes",
     "Salvar al soldado Ryan"
   ];
-
-export {bestMovies, movieTitles};  
-
-/*  
+  
+  
 
   //-- ejercicio arrays
   
   //++ starwars
-  {
+ export let sw= {
     "count": 36, 
     "next": "https://swapi.dev/api/starships/?page=3", 
     "previous": "https://swapi.dev/api/starships/?page=1", 
@@ -371,4 +374,3 @@ export {bestMovies, movieTitles};
 }
 
 //-- starwars
-*/

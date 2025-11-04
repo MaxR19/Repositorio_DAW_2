@@ -1,0 +1,113 @@
+/* ===== Reset básico ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Body ===== */
+body {
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px;
+}
+
+/* ===== Contenedor principal ===== */
+#principal {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 450px;
+}
+
+/* ===== Formulario de modificación ===== */
+#modificar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* Inputs y select */
+#modificar input[type="text"],
+#modificar select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+#modificar input[type="text"]:focus,
+#modificar select:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 5px rgba(108,99,255,0.5);
+}
+
+/* Botones */
+#modificar input[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #6c63ff;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#modificar input[type="button"]:hover {
+    background: #574fd6;
+}
+
+/* ===== Listado de tareas ===== */
+#listado {
+    max-height: 300px;
+    overflow-y: auto;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+/* Cada tarea */
+.tarea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f7f7;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.tarea:hover {
+    background: #e2e0ff;
+}
+
+/* Texto de tarea y estado */
+.tarea span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Estado con color según valor */
+.tarea .estado-pendiente {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.tarea .estado-en-progreso {
+    color: #f4d35e;
+    font-weight: bold;
+}
+
+.tarea .estado-completada {
+    color: #6bcf6b;
+    font-weight: bold;
+}
