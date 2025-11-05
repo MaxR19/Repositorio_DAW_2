@@ -1,0 +1,70 @@
+<!--
+  Práctica 2º DAW - Formularios (GET/POST + querystring)
+  Alumno: (pon tu nombre)
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Práctica Formularios - 2º DAW</title>
+  <script src="funciones.js" defer></script>
+  <style>
+    /* Estilos básicos para que se vea decente */
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { margin-bottom: 10px; }
+    form { display: grid; gap: 10px; max-width: 600px; }
+    label { font-weight: bold; }
+    input[type="text"], select { width: 100%; padding: 6px; }
+    .opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .radios { display: flex; gap: 12px; align-items: center; }
+    button { padding: 8px 12px; cursor: pointer; }
+    .nota { color: #555; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Formulario</h1>
+
+  <!--
+    NOTA:
+    - La acción (mostrar/crear/actualizar/eliminar) se enviará por querystring en la URL (funciones.php?accion=...).
+    - El método (GET/POST) lo elige el usuario con los radios.
+  -->
+  <form id="frm" name="frm" action="funciones.php?accion=mostrarDatos" method="post">
+
+    <div>
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+    </div>
+    <div>
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+    </div>
+
+    <div>
+      <label for="direccion">Dirección</label>
+      <input type="text" id="direccion" name="direccion" placeholder="Calle, nº, piso...">
+    </div>
+
+    <div>
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" required>
+          <option value="" selected disabled>-- Selecciona --</option>
+          <option value="masculino">Masculino</option>
+          <option value="femenino">Femenino</option>
+          <option value="otro">Otro</option>
+          <option value="prefiero_no_decirlo">Prefiero no decirlo</option>
+        </select>
+    </div>
+
+    <div>
+        <label>
+          <input type="checkbox" id="grado_medio" name="grado_medio" value="Si">
+          Estudios de grado medio
+        </label>
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
