@@ -37,8 +37,8 @@ switch ($accion) {
         $sHtml .= "<div class=\"marco\">";
         $sHtml .= "<h2 class=\"titulo\">Agregar nuevo título</h2>";
         $sHtml .= "<form method=\"post\" action=\"\">";
-        $sHtml .= "    <label for=\"tarea\">Nuevo título:</label>";
-        $sHtml .= "    <input type=\"text\" id=\"tarea\" name=\"tarea\" value=\"\">";
+        $sHtml .= "    <label for=\"titulo\">Nuevo título:</label>";
+        $sHtml .= "    <input type=\"text\" id=\"titulo\" name=\"titulo\" value=\"\">";
         $sHtml .= "    <label for=\"estado\">Estado:</label>";
         $sHtml .= "    <select id=\"estado\" name=\"estado\">";
         $sHtml .= "    <option value=\"\"></option>";
@@ -48,15 +48,24 @@ switch ($accion) {
         $sHtml .= "    </select>";
         $sHtml .= "    <label for=\"prestado\">En préstamo:</label>";
         $sHtml .= "    <input type=\"checkbox\" id=\"prestado\" name=\"prestado\"/>";
+        $sHtml .= "    <label for=\"localizacion\">Localización:</label>";
+        $sHtml .= "    <select id=\"localizacion\" name=\"localizacion\">";
+        $sHtml .= "    <option value=\"\"></option>";
+        $sHtml .= "    <option value=\"pendiente\">Estantería1</option>";
+        $sHtml .= "    <option value=\"leyendo\">Estantería2</option>";
+        $sHtml .= "    <option value=\"leido\">Mueble</option>";
+        $sHtml .= "    </select>";
         $sHtml .= "    <button type=\"submit\" name=\"accion\" value=\"guardar\">Enviar</button>";
                         
-        $titulo = trim($_POST['tarea']);
-        $estado = trim($_POST['estado']);
-        if (!empty($titulo) && !empty($estado)) {
-            guardarTareas($titulo, $estado);
-            $sHtml .= "<p>Tarea '$titulo' agregada correctamente.</p>";
-        } else {
-            $sHtml .= "<p style=\"color:red;\">El título del cómic no puede estar vacío.</p>";
+        if ($accion === 'guardar') {  
+            $titulo = trim($_POST['tarea'] ?? '');
+            $estado = trim($_POST['estado'] ?? '');
+            if (!empty($titulo) && !empty($estado)) {
+                anadirComic($titulo, $estado);
+                $sHtml .= "<p>El cómic '$titulo' ha sido agregado correctamente.</p>";
+            } else {
+                $sHtml .= "<p style=\"color:red;\">El título del cómic no puede estar vacío.</p>";
+            }
         }
 
         $sHtml .= "</form>";
@@ -65,8 +74,7 @@ switch ($accion) {
     case 'ver':
         $sHtml .= "<div class=\"marco\">";
         $sHtml .= "<h2 class=\"titulo\">Mi colección</h2>";
-        $tareas = cargarTareas();
-        $sHtml .= mostrarTareas($tareas);
+        $sHtml .= mostrarColeccion();
         $sHtml .= "</div>";
 
 

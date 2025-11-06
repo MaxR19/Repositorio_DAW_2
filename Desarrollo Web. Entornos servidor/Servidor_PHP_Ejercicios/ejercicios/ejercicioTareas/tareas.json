@@ -17,7 +17,7 @@
     {
         "id": 4,
         "tarea": "Preparar presentación",
-        "estado": "pendiente"
+        "estado": "en progreso"
     },
     {
         "id": 5,
@@ -38,5 +38,15 @@
         "id": 8,
         "tarea": "Tarea nueva",
         "estado": "en progreso"
+    },
+    {
+        "id": 9,
+        "tarea": "Hola",
+        "estado": "en progreso"
+    },
+    {
+        "id": 10,
+        "tarea": "",
+        "estado": ""
     }
 ]

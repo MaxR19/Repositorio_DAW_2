@@ -1,0 +1,151 @@
+/* GENERAL */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1.encabezados, p {
+    background-color: #f8a013;
+    color: white;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+}
+
+h2.encabezados {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* MARCO DE BOTONES PRINCIPALES */
+.marco {
+    text-align: center;
+    padding: 20px;
+}
+
+.marco button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin: 0 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.marco button:hover {
+    background-color: #218838;
+}
+
+/* FORMULARIO DE AGREGAR */
+form#formulario {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+    align-items: center;
+}
+
+form#formulario label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form#formulario input[type="text"],
+form#formulario select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+form#formulario input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-left: 10px;
+}
+
+form#formulario button {
+    grid-column: span 2;
+    justify-self: center;
+    background-color: #28a745;
+    padding: 10px 25px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form#formulario button:hover {
+    background-color: #218838;
+}
+
+/* TABLA */
+table {
+    width: 95%;
+    margin: 25px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* FORMULARIOS DENTRO DE CELDAS */
+table form {
+    margin: 0;
+}
+
+/* FORMULARIO DE ELIMINAR */
+#formulario-eliminar {
+    max-width: 500px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#formulario-eliminar label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#formulario-eliminar input[type="text"] {
+    width: 60%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+#formulario-eliminar button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#formulario-eliminar button:hover {
+    background-color: #c82333;
+}
