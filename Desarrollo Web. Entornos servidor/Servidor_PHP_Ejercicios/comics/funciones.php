@@ -187,21 +187,24 @@ function anadirComic($titulo, $autor, $estado, $prestado, $localizacion) {
 function modificarEstado($nuevoEstado, $id) {
     global $archivo;
 
-    // Cargo el JSON en memoria
+    // Cargar el archivo JSON en memoria
     $coleccion = cargarColeccion($archivo);
     if ($coleccion === null) {
         return false;
     }
 
-    // Recorremos por referencia para modificar el objeto directamente
+    // Recorrer por referencia para modificar el objeto
     foreach ($coleccion as &$comic) {
         if ($comic->id == $id) {
-            $comic->estado = $nuevoEstado; // cambia el estado
-            console.log($comic->estado);
-            break; // ya no hace falta seguir buscando
+            $comic->estado = $nuevoEstado; 
+            // Cambiar el estado cuando el id del cómic que hemos modificado su estado es el mismo que el que pasa en ese
+            // momento en el for-each.
+            
+            break;
         }
     }
-    unset($comic); // buena práctica al usar referencias (&)
+    unset($comic); 
+    // Se elimina el objeto cómic. Es una buena práctica al usar referencias (&)
 
     // Guardar el JSON actualizado
     guardarColeccion($archivo, $coleccion);
