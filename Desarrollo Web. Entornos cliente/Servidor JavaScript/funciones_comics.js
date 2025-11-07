@@ -27,6 +27,7 @@ function mostrarFuncionalidad(div) {
 }
 
 class Comic {
+    
     constructor(id, titulo, autor, estado, prestado, localizacion) {
         this.id = Number(id);
         this.titulo = String(titulo);
@@ -36,16 +37,23 @@ class Comic {
         this.localizacion = String(localizacion);
     }
 
-    agregarComicLocalStorage(comic) {
-        const comics = localStorage.getItem("comics");
-        comics.push(comic);
+    cargarColeccion() {
+        return JSON.parse(localStorage.getItem("comics") || "[]");
+    }
+
+    guardarColeccion(comics) {
         localStorage.setItem("comics", JSON.stringify(comics));
+    }    
+
+    agregarComic(comic) {
+        const comics = cargarColeccion();
+        comics.push(comic);
+        guardarColeccion(comics);
     }
 
     modificarEstado(id, nuevoEstado) {
-        const comics = localStorage.getItem("comics");
-        listaComics = JSON.parse(comics);
-        listaComics[id].estado = nuevoEstado;
+        const comics = cargarColeccion();
+        comics[id].estado = nuevoEstado;
         localStorage.setItem("comics", JSON.stringify(listaComics));
     }
 
