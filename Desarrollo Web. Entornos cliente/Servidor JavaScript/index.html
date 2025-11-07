@@ -1,46 +1,522 @@
-<html>
+<script>
 
-<head>
-    <title>Gestion de Tareas</title>
-    <script src="./funciones4.js"></script>
-    <link rel="stylesheet" href="./estilos.css">
+    // Parámetros por defecto
 
-</head>
+    function pintar(color = "negro") {
+        console.log(`Pintando con color ${color}`);
+    }
 
-<body>
-    <form id="frm" name="frm" action="" method="post">
-        <div id="principal">
-            <div id="modificar">
-                <div>Tarea<input type="text" value=""
-                        id="tarea" name="tarea"/></div>
-                <div>Estado
-                    <select id="estado" name="estado" >
-                        <option value=""></option>
-                        <option value="pendiente">pendiente
-                        </option>
-                        <option value="en progreso">en
-                            progreso</option>
-                        <option value="completada">completada
-                        </option>
-                    </select>
-                </div>
-                <div>Id<input type="text" value=""
-                        id="id" name="id"/></div>
-                <div>
-                    <input type="button" id="btnAnadir" onclick="anadir();" value="ADD" />
-                    <input type="button" id="btnAnadir"
-                        onclick="modificar();"
-                        value="MOD" />
-                    <input type="button" id="btnAnadir"
-                        onclick="eliminar();"
-                        value="DEL" />
-                </div>
-            </div>
-            <div id="listado">
+    pintar();        // Pintando con color negro
+    pintar("azul");  // Pintando con color azul
 
-            </div>
-        </div>
-    </form>
-</body>
+    // Funciones como valor
+    // También pueden ser pasadas como parámetros a otras funciones:
 
-</html>
+    function sumar(a, b) {
+        return a + b;
+    }
+
+    function restar(a, b) {
+        return a - b;
+    }
+
+    function operar(operacion, a, b) {
+        return operacion(a, b);
+    }
+
+    let v1 = operar(sumar, 4, 5);   // v1 = 9
+    let v2 = operar(restar, 4, 5);  // v2 = -1
+
+    console.log(v1, v2);
+
+    // La aplicación más útil de esta característica es el uso de callbacks, 
+    // que son funciones que se ejecutan cuando se completa una tarea.
+
+    // Funciones anónimas
+
+    function confirmar(pregunta, si, no) {
+        if (confirm(pregunta)) {
+            si();
+        } else {
+            no();
+        }
+    }
+
+    confirmar("¿Sabes qué es un callback?", 
+        function () {
+            console.log("Has respondido que sí");
+        },
+    
+        function () {
+            console.log("Has respondido que no");
+        }
+    );
+
+    // Funciones flecha
+
+    // Una línea de código
+
+    const sumarOp = (a, b) => a + b;
+
+    // Varias líneas:
+
+    const restarOp = (a, b) => {
+        console.log("Restando");
+        return a - b;
+    };
+
+    // Parámetros rest y sintaxis spread
+    // Convertir un array a un conjunto de parámetros:
+
+    function sumar(a, b) {
+        return a + b;
+    }
+    
+    const numeros1 = [4, 7];
+
+    const resultado = sumar(...numeros1); // equivale a sumar(4, 7)
+    console.log(resultado); // 11
+
+    // Copia de arrays
+
+    let colores1 = ["azul", "rojo", "verde"];
+    let colores2 = colores1;            // NO ES UNA COPIA (misma referencia)
+    let colores3 = [...colores1];       // COPIA NUEVA (shallow copy)
+    let colores4 = ["cian", ...colores1, "rosa"];
+
+    colores2[0] = "amarillo";
+
+    console.log(colores1[0]); // amarillo  (se modificó porque comparte referencia con colores2)
+    console.log(colores2[0]); // amarillo
+    console.log(colores3[0]); // azul      (independiente por el spread)
+    console.log(colores4.length); // 5
+    console.log(colores4); // [ 'cian', 'azul', 'rojo', 'verde', 'rosa' ]
+
+    // Closures
+    function crearContador() {
+        let cuenta = 0;
+        return function () {
+            return cuenta++;
+        };
+    }
+
+    let contador1 = crearContador();
+    console.log(contador1()); // 0
+    console.log(contador1()); // 1
+    console.log(contador1()); // 2
+
+    let contador2 = crearContador();
+    console.log(contador2()); // 0
+    console.log(contador2()); // 1
+
+    // Objetos y Prototipos
+    // Principios básicos
+
+    const coche = {
+        color: "rojo",
+        marca: "seat",
+    
+        arrancar: function () {
+            console.log("Arrancando");
+            console.log(this.color); // "rojo"
+            console.log(this.marca); // "seat"
+        },
+    };
+
+    coche.arrancar(); // Arrancando ...
+
+    // Añadir propiedades
+    coche.modelo = "ibiza";
+    coche["combustible"] = "diesel";
+
+    // Recorrer propiedades enumerables propias + heredadas
+    for (const prop in coche) {
+        if (Object.prototype.hasOwnProperty.call(coche, prop)) {
+        console.log(prop); // filtra solo las propias
+        }
+    }
+
+    const persona = {
+        edad: 20,
+        nombre: "David",
+    };
+
+    console.log("edad" in persona);     // true
+    console.log("apellido" in persona); // false
+
+    // Referencia y copia
+    // Las variables almacenan referencias.
+    // Para copiar un objeto:
+
+    const destino = { a: 1, b: 2 };
+    const origen  = { b: 3, c: 4 };
+
+    const res = Object.assign(destino, origen);
+    console.log(res);      // { a:1, b:3, c:4 }
+    console.log(destino);  // { a:1, b:3, c:4 }  ← modificado
+
+    // Objetos predefinidos y métodos de primitivas
+
+    let cadena = "Texto";
+    
+    console.log(cadena.length);          // 5
+    console.log(Number(2.54).toExponential()); // "2.54e+0"
+    console.log("texto".toUpperCase());  // "TEXTO"
+    console.log(Number(25).toString());  // "25"
+
+    let cadena2 = "Esto es un texto";
+    
+    console.log(cadena2.indexOf("x"));   // 13
+    console.log(cadena2.includes("texto"));     // true
+    console.log(cadena2.startsWith("Es"));      // true
+    console.log(cadena2.endsWith("Es"));        // false
+
+    // this
+
+    let usuario = {
+        nombre: "David",
+        saluda: function () {
+            return this.nombre;
+        },
+    };
+
+    usuario.saluda(); // "David"
+    // Se llama como método del objeto. 
+    // El receptor es usuario, así que dentro de la función this === usuario.
+
+    let intentaSaludar = usuario.saluda;
+    intentaSaludar(); // undefined
+    // Has extraído la función a una variable y la llamas “suelta”. Ya no hay objeto receptor, por lo que:
+    // En modo estricto (módulos/ES6): this === undefined → this.nombre es undefined.
+
+    function saluda() {
+        console.log(this.nombre);
+    }
+
+    saluda.call(usuario); // "David"
+    // saluda es una función “suelta”; por sí sola no sabe qué es this.
+    // call la ejecuta inmediatamente y le pasa como this el primer argumento (usuario).
+    // Así, dentro de saluda, this.nombre apunta a usuario.nombre.
+
+
+    // Funciones flecha
+    let usuario2 = {
+        nombre: "David",
+        saluda: () => {
+            return this.nombre; // undefined
+        },
+    };
+
+    usuario2.saluda(); // undefined
+    // Las funciones flecha NO tienen su propio this. Capturan (cierran sobre) el this léxico del lugar donde se crean.
+    // En un módulo o en modo estricto, ese this exterior suele ser undefined (no el objeto usuario).
+    // Por eso, dentro de saluda, this.nombre es undefined, y el método devuelve undefined, aunque usuario.nombre sea "David".
+
+    // Uso en callbacks
+    let usuario3 = {
+        nombre: "David",
+        saludaConRetardo: function () {
+            setTimeout(function () {
+                console.log(this.nombre); // undefined
+            }, 1000);
+        },
+    };
+
+    usuario3.saludaConRetardo();
+
+    // Solución con bind
+
+    let usuario4 = {
+        nombre: "David",
+        saludaConRetardo() {
+            setTimeout(function () {
+                console.log(this.nombre); // "David"
+            }.bind(this), 1000);
+        },
+    };
+
+    // Solución con función flecha
+
+    let usuario5 = {
+        nombre: "David",
+        saludaConRetardo() {
+            setTimeout(() => {
+                console.log(this.nombre); // "David"
+            }, 1000);
+        },
+    };
+
+    // Reglas de this
+    // Con new : objeto creado
+    // Con call , apply , bind : objeto especificado
+    // Enlace implícito: objeto que llama al método
+    // Sin enlace: global o undefined en modo estricto
+
+
+    // Prototipos y Herencia
+    // Funciones constructoras
+
+    function Usuario(nombre, apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
+    Usuario.prototype.saludar = function () {
+        console.log(`Me llamo ${this.nombre} ${this.apellidos}`);
+    };
+
+    let usuario6 = new Usuario("David", "Pérez");
+    usuario6.saludar(); // "Me llamo David Pérez"
+
+    // Objetos enlazados
+
+    let persona2 = {
+        saludar: function () {
+            console.log("Hola");
+        },
+    };
+
+    let usuario7 = Object.create(persona2);
+    usuario7.saludar(); // "Hola"
+
+    // Prototipos nativos
+    // • Object.prototype
+    // • Function.prototype
+    // • Array.prototype
+    // • Date.prototype
+
+    // Clases
+    // Definición de clase
+
+    class UsuarioNA {
+        constructor(nombre, apellidos) {
+            this.nombre = nombre;
+            this.apellidos = apellidos;
+        }
+
+        saludar() {
+            console.log(`Me llamo ${this.nombre} ${this.apellidos}`);
+        }
+    }
+
+    let usuario8 = new UsuarioNA("David", "Pérez");
+    usuario8.saludar(); // "Me llamo David Pérez"
+
+    // Herencia
+
+    class Empleado extends UsuarioNA {
+        constructor(nombre, apellidos, puesto) {
+            super(nombre, apellidos);
+            this.puesto = puesto;
+        }
+
+        saludar() {
+            console.log(`Me llamo ${this.nombre} ${this.apellidos} y soy ${this.puesto}`);
+        }
+    }
+
+    let empleado = new Empleado("David", "Pérez", "Desarrollador");
+    empleado.saludar(); // "Me llamo David Pérez y soy Desarrollador"
+
+    // JSON
+    // ¿Qué es?
+    // JSON (JavaScript Object Notation) es un formato de texto para representar objetos.
+    // Muy utilizado en comunicaciones cliente-servidor.
+
+    // Métodos JSON
+    let usuario9 = {
+        nombre: "David",
+        edad: 25,
+        permisos: ["administrador", "editor"],
+    };
+
+    let cadenaJson = JSON.stringify(usuario); // Serializa el objeto a una cadena en formato JSON (String)
+
+    let usuarioRecuperado = JSON.parse(cadenaJson); // Devuelve un objeto nuevo con los mismos valores
+
+    // Para persistir datos en localStorage
+    // Guardar (serialize a JSON)
+    const usuario10 = { nombre: "David", edad: 25, permisos: ["admin", "editor"] };
+    localStorage.setItem("usuario10", JSON.stringify(usuario10));
+
+    // localStorage.setItem(clave, valorString) solo acepta strings → por eso usamos JSON.stringify.
+
+    // Leer (parse desde JSON)
+    const raw = localStorage.getItem("usuario10"); // string o null si no existe
+    const usuarioRecup = raw ? JSON.parse(raw) : null;
+
+    // Actualizar (leer → modificar → guardar)
+    const raw2 = localStorage.getItem("usuario");
+    const u = raw2 ? JSON.parse(raw2) : {};
+    u.edad = 26;
+    localStorage.setItem("usuario", JSON.stringify(u));
+
+    // Borrar y limpiar
+    localStorage.removeItem("usuario"); // borra esa clave
+    localStorage.clear();               // borra TODO el almacenamiento del origen
+
+    // Ejemplo de exportación (miLibreria.js)
+
+    // Fichero miLibreria.js function saludar(usuario) { console.log('Hola, ${usuario}'); } function secreto() { console.log("Ssssshh...
+    // es un secreto..."); } function despedir(usuario) { secreto(); console.log ('Adiós, ${usuario}'); } export { saludar, despedir }
+
+    // La función secreto no se exporta, por lo que no es visible fuera del módulo; sin embargo, dentro del módulo sí que puede utilizarse.
+
+    
+    // Ejemplo de importación (principal.js)
+    
+    // Fichero principal.js import { saludar, despedir } from
+    // './miLibreria.js'; saludar("Juan"); // Hola, Juan 
+    // despedir(); // "Ssssshh... es un secreto... Adiós, Juan"
+
+
+    // Importar toda la funcionalidad
+
+    // import * as miLibreria from './miLibreria.js'; miLibreria.
+    // saludar("Juan"); // Hola, Juan 
+    // miLibreria.despedir(); // "Ssssshh... es unsecreto... Adiós, Juan"
+
+
+    // Módulos en HTML
+    // Para trabajar con módulos en HTML y utilizar import para cargarlos en nuestros programas es necesario utilizar el atributo 
+    // type="module" en la etiqueta <script> :
+
+    // <script type="module"> import * as miLibreria from './mi Libreria.js'; miLibreria.saludar("Juan"); miLibreria.despedir(); </cript>
+    
+    // import siempre debe definir una ruta (absoluta o relativa) al archivo del módulo que se pretenda importar.
+
+
+    // Programación Funcional
+
+    let datos = [14, 22, 16, 3, 35];
+
+    // Obtener los elementos menores que 15
+    let resultado2 = datos.filter(function (dato) {
+        return dato < 15; // condición: ¿el elemento es menor que 15?
+    });
+
+    console.log(resultado2); // [14, 3]
+
+    // Array.prototype.filter recorre el array y construye un nuevo array con los elementos para los que el callback devuelve true
+    // No muta el array original (datos sigue igual).
+    // Devuelve un nuevo array (resultado) con los que cumplen la condición.
+
+    let menorQue15 = dato => dato < 15;
+
+    let resultado3 = datos.filter(menorQue15);
+
+    console.log(resultado3); // [14, 3]
+
+    // Otra forma: let resultado = datos.filter(d => d < 15);
+
+    // Find
+    // Devuelve el primer elemento que cumpla la condición.
+
+    let usuarios = [
+        { nombre: "David", apellido: "Pérez", nif: 1 },
+        { nombre: "Juan",  apellido: "Martínez", nif: 2 },
+        { nombre: "José",  apellido: "Fernández", nif: 3 }
+    ];
+
+    let usuarioConNif2 = usuarios.find(item => item.nif == 2);
+
+    console.log(usuarioConNif2); 
+    // { nombre: "Juan", apellido: "Martínez", nif: 2 }
+
+    // Ese código busca dentro del array usuarios el primer objeto cuyo nif sea 2 y lo guarda en usuarioConNif2. Luego lo imprime.
+    // .find(...) recorre el array y devuelve el primer elemento que cumpla la condición; si no hay coincidencia, devuelve undefined.
+    // La condición es item.nif == 2. Podrías usar === si nif es numérico siempre (comparación estricta).
+    // No modifica el array original.
+
+
+    // ForEach
+    // Permite ejecutar una función en cada uno de los elementos del array.
+
+    let datos2 = ["a", "b", "c", "d"]; datos2.forEach(alert);
+
+    // Ejercicio completo
+
+    let datos3 = ["a", "b", "c", "d"]; datos.forEach(function (item, indice, array) { 
+        console.log('Procesando el elemento ' + item + ',en la posición ' + indice + '. El array es ' + array + '.');
+    });
+
+
+    // Map
+    // Se utiliza para realizar transformaciones de arrays.
+
+    let numeros = [1, 3, 5, 7]; 
+    let dobleNumeros = numeros.map (function (numero) { 
+        return numero * 2; // transformación de cada elemento
+    }); 
+    
+    console.log(numeros); // [1, 3, 5, 7] (no se modifica)
+    console.log(dobleNumeros); // [2, 6, 10, 14]
+
+    // Array.prototype.map transforma cada elemento del array original aplicando una función y devuelve un nuevo array con los resultados, 
+    // sin modificar el original.
+    // map recorre numeros elemento a elemento.
+    // Para cada numero, ejecuta el callback y usa su valor de retorno (numero * 2) para construir el nuevo array.
+    // Resultado: un array con cada valor duplicado.
+
+
+    // Reduce
+    // Función para reducir un array a un único valor. Se usa comúnmente para totales o agrupaciones.
+    // Suma total de un array
+
+    let numeros2 = [2, 5, 4]; 
+    let total = numeros2.reduce( function (acc, numero) { 
+        return acc + numero; 
+    }, 0 ); 
+    console.log(total); // 11
+
+    // El 0 es el valor inicial del acumulador (acc) en reduce.
+    // reduce(callback, valorInicial) empieza con acc = valorInicial.
+    // En tu caso, arranca en 0 y va sumando cada numero.
+
+
+    // Agrupación por color de coche
+
+    let coches = [
+        { color: "rojo",  modelo: "A" },
+        { color: "verde", modelo: "B" },
+        { color: "azul",  modelo: "C" },
+        { color: "rojo",  modelo: "D" }
+    ];
+
+    let agrupado = coches.reduce(function (acc, coche) {
+        let color = coche.color;
+        if (!acc[color]) {
+            acc[color] = { cuenta: 0, listado: [] };
+        }
+        acc[color].cuenta++;
+        acc[color].listado.push(coche);
+        return acc;
+    }, {});
+
+    console.log(agrupado);
+
+    // Esa función usa Array.prototype.reduce para agrupar los coches por color y construir un objeto-resumen.
+    // reduce(..., {}) empieza con un acumulador objeto vacío {}.
+    // Para cada coche:
+    // - Toma su color.
+    // - Si no existe el grupo acc[color], lo crea con { cuenta: 0, listado: [] }.
+    // - Incrementa el contador cuenta.
+    // - Añade el coche al listado.
+    // - Devuelve el acumulador al final.
+
+    
+    // Manipulación básica del DOM
+    // JavaScript permite acceder y modificar el contenido de la página web (DOM):
+    
+    // Obtener un elemento por ID 
+    let titulo = document.getElementById("titulo"); 
+    // Cambiar el texto 
+    titulo.textContent = "Nuevo título"; 
+    // Cambiar el estilo 
+    titulo.style.color = "red"; 
+    // Añadir un evento 
+    titulo.addEventListener("click", function() { 
+        alert("¡Has hecho clic en el título!");
+    });
+
+</script>
