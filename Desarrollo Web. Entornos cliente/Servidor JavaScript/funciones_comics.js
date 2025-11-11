@@ -37,22 +37,22 @@ class Comic {
         this.localizacion = String(localizacion);
     }
 
-    cargarColeccion() {
+    static cargarColeccion() {
         return JSON.parse(localStorage.getItem("comics") || "[]");
     }
 
-    guardarColeccion(comics) {
+    static guardarColeccion(comics) {
         localStorage.setItem("comics", JSON.stringify(comics));
     }    
 
     agregarComic(comic) {
-        const comics = cargarColeccion();
+        const comics = Comic.cargarColeccion();
         comics.push(comic);
         guardarColeccion(comics);
     }
 
     modificarEstado(id, nuevoEstado) {
-        const comics = cargarColeccion();
+        const comics = Comic.cargarColeccion();
         comics[id].estado = nuevoEstado;
         localStorage.setItem("comics", JSON.stringify(listaComics));
     }
