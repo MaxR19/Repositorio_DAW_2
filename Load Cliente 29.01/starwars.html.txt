@@ -1,0 +1,112 @@
+starwars.html:
+<h1>STAR WARS RULES</h1>
+<app-lukeskywalker [datos]="resultados" (enviarPersonajes)="cargaNaves($event)" ></app-lukeskywalker>
+
+<div *ngFor="let per of arrPersonajes">
+    <span class="personaje_peli">{{per.nombre}}</span>
+    <div *ngFor="let peli of per.pelis">
+        <span class="texto_peli">{{peli.title}}</span>
+        <span class="texto_peli">{{peli.opening_crawl}}</span>
+    </div>
+</div>
+
+starwars.scss:
+.personaje_peli {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffe81f; /* amarillo Star Wars 😏 */
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+}
+
+.texto_peli {
+    display: block;
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
+/* contenedor de cada peli */
+.personaje_peli + div,
+.personaje_peli ~ div {
+    background-color: #1c1c1c;
+    padding: 10px 15px;
+    border-left: 3px solid #ffe81f;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+/* título de la peli (primer span dentro del div) */
+.texto_peli:first-child {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* opening crawl */
+.texto_peli:last-child {
+    font-style: italic;
+    opacity: 0.85;
+}
+
+starwars.spec.ts:
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { Starwars } from './starwars';
+
+describe('Starwars', () => {
+  let component: Starwars;
+  let fixture: ComponentFixture<Starwars>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Starwars]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(Starwars);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+
+starwars.ts:
+import { Component } from '@angular/core';
+import { ApiService } from '../services/api.service';
+import { lastValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Lukeskywalker } from '../lukeskywalker/lukeskywalker';
+import { Personaje } from '../models/personaje';
+@Component({
+  selector: 'app-starwars',
+  imports: [Lukeskywalker,CommonModule],
+  templateUrl: './starwars.html',
+  styleUrl: './starwars.scss',
+})
+export class Starwars {
+datos: any;
+//Declaro variable coleccion personajes
+arrPersonajes: Personaje[] = [];
+resultados:any;
+  constructor(private apiService: ApiService) { }
+   async ngOnInit() {
+
+    //Hago mi llamada a la api, que luego en un futuro mi profe me explicara como se hace
+    this.apiService.apiUrl = 'https://swapi.dev/api/people';
+    let a = await this.apiService.getPosts();
+    this.datos = await lastValueFrom(a);
+
+    this.resultados=this.datos.results;
+    console.log("this.datos",this.datos);
+  }
+
+  cargaNaves(e:any){
+      //Esta funcion me pinta los datos de las naves de cada personaje
+      this.arrPersonajes=e;
+  }
+}

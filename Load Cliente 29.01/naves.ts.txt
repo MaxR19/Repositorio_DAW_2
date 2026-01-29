@@ -1,0 +1,25 @@
+naves.ts:
+//Mi clase naves
+export class Naves {
+    name:string="";
+    model:string="";
+}
+
+peliculas.ts:
+//Mi clase peliculas
+export class Peliculas {
+    title:string="";
+    opening_crawl:string="";
+}
+
+personaje.ts:
+import { Naves } from "./naves";
+import { Peliculas } from "./peliculas";
+
+//Necesitare una clase personaje que tenga 3 propiedades nombre, pelis y naves
+export class Personaje {
+    nombre: string = "";
+    naves: Naves[] = [];
+    pelis: Peliculas[] = [];
+
+}

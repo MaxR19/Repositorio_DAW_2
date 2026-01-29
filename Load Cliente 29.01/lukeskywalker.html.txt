@@ -1,0 +1,175 @@
+lukeskywalker.html:
+<div *ngFor="let per of arrPersonajes">
+    <span class="personaje_nave">{{per.nombre}}</span>
+    <div *ngFor="let nav of per.naves">
+        <span class="texto_nave">{{nav.name}}</span>
+        <span class="texto_nave">{{nav.model}}</span>
+    </div>
+</div>
+
+lukeskywalker.scss:
+.personaje_nave {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4fc3f7; /* azul espacial */
+    margin: 22px 0 12px;
+    letter-spacing: 1px;
+}
+
+.texto_nave {
+    display: block;
+    font-size: 0.95rem;
+    color: #dcdcdc;
+    margin: 3px 0;
+}
+
+/* contenedor de cada nave */
+.personaje_nave + div,
+.personaje_nave ~ div {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #333;
+}
+
+/* nombre de la nave */
+.texto_nave:first-child {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* modelo de la nave */
+.texto_nave:last-child {
+    font-size: 0.85rem;
+    color: #9fdcff;
+    opacity: 0.85;
+}
+
+lukeskywalker.spec.ts:
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { Lukeskywalker } from './lukeskywalker';
+
+describe('Lukeskywalker', () => {
+  let component: Lukeskywalker;
+  let fixture: ComponentFixture<Lukeskywalker>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Lukeskywalker]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(Lukeskywalker);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+
+lukeskywalker.ts:
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ApiService } from '../services/api.service';
+import { lastValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Personaje } from '../models/personaje';
+import { Naves } from '../models/naves';
+import { Peliculas } from '../models/peliculas';
+@Component({
+  selector: 'app-lukeskywalker',
+  imports: [CommonModule],
+  templateUrl: './lukeskywalker.html',
+  styleUrl: './lukeskywalker.scss',
+})
+export class Lukeskywalker {
+  constructor(private apiService: ApiService) { }
+  //Una variable de entrada con los datos
+  @Input() datos: any;
+  //Una funcion de tipo coleccionpersonajes que emita mi coleccion de personajes al padre
+  @Output() enviarPersonajes = new EventEmitter<Personaje[]>();
+  arrPersonajes: Personaje[] = [];
+  async ngOnInit() {
+    //Con los datos que vienen del padre pinto los personajes con sus pelis, mas cargo los datos
+    await this.pintaPelisyNaves();
+
+  }
+
+  async pintaPelisyNaves() {
+    //Me construira el objeto de personaje pelis y naves
+    for (let per of this.datos) {
+      //Me creo un personaje vacio
+      let oPer: Personaje = new Personaje();
+      oPer.nombre = per.name;
+
+      //Cargo las naves del personaje con una funcion asincrona pq quiero llamar a la api
+      let arrNaves: Naves[] = [];
+      arrNaves = await this.llamadaNaves(per.starships);
+      oPer.naves = arrNaves;
+
+      //Cargo las pelis del personaje con una funcion asincrona pq quiero llamar a la api
+      let arrPelis: Peliculas[] = [];
+      arrPelis = await this.llamadaPelis(per.films);
+      oPer.pelis = arrPelis;
+
+      this.arrPersonajes.push(oPer);
+    }
+
+
+    //Cuando termine de construirlo emito al padre
+    this.enviarPersonajes.emit(this.arrPersonajes);
+  }
+
+  async llamadaNaves(starships: any): Promise<Naves[]> {
+    //Esta funcion me llamara a cada una de las apis de naves e ira construyendo mi arr Naves
+    let arrNaves: Naves[] = [];
+    for (let ss of starships) {
+      //Me instancion un objeto nuevo de nave
+      let naveNue: Naves = new Naves();
+
+      //LLamo a la url de la api de naves y me traigo el objeto
+      this.apiService.apiUrl = ss;
+      let a = await this.apiService.getPosts();
+      let oNave = await lastValueFrom(a);
+
+      //Si tiene dato lo pusheo al array
+      if (oNave != null) {
+        naveNue.model = oNave.model;
+        naveNue.name = oNave.name;
+        arrNaves.push(naveNue);
+      }
+
+    }
+
+    return arrNaves;
+  }
+
+  async llamadaPelis(films: any): Promise<Peliculas[]> {
+    //Esta funcion me llamara a cada una de las apis de naves e ira construyendo mi arr Naves
+    let arrPelis: Peliculas[] = [];
+    for (let fil of films) {
+      //Me instancion un objeto nuevo de nave
+      let peliNue: Peliculas = new Peliculas();
+
+      //LLamo a la url de la api de naves y me traigo el objeto
+      this.apiService.apiUrl = fil;
+      let a = await this.apiService.getPosts();
+      let oPeli = await lastValueFrom(a);
+
+      //Si tiene dato lo pusheo al array
+      if (oPeli != null) {
+        peliNue.title = oPeli.title;
+        peliNue.opening_crawl = oPeli.opening_crawl;
+        arrPelis.push(peliNue);
+      }
+
+    }
+
+    return arrPelis;
+  }
+}
+
